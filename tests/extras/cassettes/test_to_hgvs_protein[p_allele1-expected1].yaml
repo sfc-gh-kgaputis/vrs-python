@@ -1,0 +1,129 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:5000/seqrepo/1/metadata/ga4gh:SQ.KAxM06sYzBF6zFftFaYq9E_18wsnn7al
+  response:
+    body:
+      string: "{\n  \"added\": \"2016-08-24T05:02:35Z\",\n  \"aliases\": [\n    \"Ensembl:ENSP00000269305.4\",\n
+        \   \"ensembl:ENSP00000269305.4\",\n    \"Ensembl:ENSP00000391478.2\",\n    \"ensembl:ENSP00000391478.2\",\n
+        \   \"MD5:c133dfce69f606f20865e9008199f852\",\n    \"NCBI:NP_000537.3\",\n
+        \   \"refseq:NP_000537.3\",\n    \"NCBI:NP_001119584.1\",\n    \"refseq:NP_001119584.1\",\n
+        \   \"SEGUID:fGN3kSCGIpi/D6d/X5kaB0Xu8/k\",\n    \"SHA1:7c63779120862298bf0fa77f5f991a0745eef3f9\",\n
+        \   \"VMC:GS_KAxM06sYzBF6zFftFaYq9E_18wsnn7al\",\n    \"sha512t24u:KAxM06sYzBF6zFftFaYq9E_18wsnn7al\",\n
+        \   \"ga4gh:SQ.KAxM06sYzBF6zFftFaYq9E_18wsnn7al\"\n  ],\n  \"alphabet\": \"ACDEFGHIKLMNPQRSTVWY\",\n
+        \ \"length\": 393\n}\n"
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '636'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 17 Jan 2023 15:13:55 GMT
+      Server:
+      - Werkzeug/2.2.2 Python/3.10.4
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:5000/seqrepo/1/sequence/ga4gh:SQ.KAxM06sYzBF6zFftFaYq9E_18wsnn7al?start=274&end=277
+  response:
+    body:
+      string: CAC
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '3'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Tue, 17 Jan 2023 15:13:55 GMT
+      Server:
+      - Werkzeug/2.2.2 Python/3.10.4
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:5000/seqrepo/1/sequence/ga4gh:SQ.KAxM06sYzBF6zFftFaYq9E_18wsnn7al?start=274&end=275
+  response:
+    body:
+      string: C
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '1'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Tue, 17 Jan 2023 15:13:55 GMT
+      Server:
+      - Werkzeug/2.2.2 Python/3.10.4
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:5000/seqrepo/1/sequence/ga4gh:SQ.KAxM06sYzBF6zFftFaYq9E_18wsnn7al?start=276&end=277
+  response:
+    body:
+      string: C
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '1'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Tue, 17 Jan 2023 15:13:55 GMT
+      Server:
+      - Werkzeug/2.2.2 Python/3.10.4
+    status:
+      code: 200
+      message: OK
+version: 1

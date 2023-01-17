@@ -114,6 +114,55 @@ def test_from_hgvs(tlr):
     assert tlr._from_hgvs(duplication_inputs["hgvs"]).as_dict() == duplication_output
 
 
+hgvs_protein_tests = (
+    (  # protein substitution
+        {
+            "type": "Allele",
+            "location": {
+                "type": "SequenceLocation",
+                "sequence_id": "ga4gh:SQ.cQvw4UsHHRRlogxbWCB8W-mKD4AraM9y",
+                "interval": {
+                    "type": "SequenceInterval",
+                    "start": {"type": "Number", "value": 599},
+                    "end": {"type": "Number", "value": 600}
+                }
+            },
+            "state": {
+                "type": "LiteralSequenceExpression",
+                "sequence": "E"
+            }
+        }, ["NP_004324.2:p.Val600Glu"]
+    ),
+    (  # protein delins
+        {
+            "type": "Allele",
+            "location": {
+                "type": "SequenceLocation",
+                "sequence_id": "ga4gh:SQ.KAxM06sYzBF6zFftFaYq9E_18wsnn7al",
+                "interval": {
+                    "type": "SequenceInterval",
+                    "start": {"type": "Number", "value": 274},
+                    "end": {"type": "Number", "value": 277}
+                }
+            },
+            "state": {
+                "type": "LiteralSequenceExpression",
+                "sequence": "C"
+            }
+        }, ["NP_000537.3:p.Cys275_Cys277delinsCys", "NP_001119584.1:p.Cys275_Cys277delinsCys"]
+    )
+)
+
+
+@pytest.mark.parametrize("p_allele,expected", hgvs_protein_tests)
+@pytest.mark.vcr
+def test_to_hgvs_protein(tlr, p_allele, expected):
+    allele = models.Allele(**p_allele)
+    to_hgvs = tlr.translate_to(allele, "hgvs")
+    assert len(expected) == len(to_hgvs)
+    assert set(expected) == set(to_hgvs)
+
+
 @pytest.mark.vcr
 def test_from_spdi(tlr):
     assert tlr._from_spdi(snv_inputs["spdi"]).as_dict() == snv_output

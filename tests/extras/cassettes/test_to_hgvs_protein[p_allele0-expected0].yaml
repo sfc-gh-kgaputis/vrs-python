@@ -1,0 +1,68 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:5000/seqrepo/1/metadata/ga4gh:SQ.cQvw4UsHHRRlogxbWCB8W-mKD4AraM9y
+  response:
+    body:
+      string: "{\n  \"added\": \"2016-08-24T05:01:50Z\",\n  \"aliases\": [\n    \"Ensembl:ENSP00000288602.6\",\n
+        \   \"ensembl:ENSP00000288602.6\",\n    \"Ensembl:ENSP00000493543.1\",\n    \"ensembl:ENSP00000493543.1\",\n
+        \   \"MD5:74c9b69323bd112084c1b5b385e7e6c5\",\n    \"NCBI:NP_004324.2\",\n
+        \   \"refseq:NP_004324.2\",\n    \"SEGUID:sfzILpNpX8UFB/vgH9LOKLpl/+g\",\n
+        \   \"SHA1:b1fcc82e93695fc50507fbe01fd2ce28ba65ffe8\",\n    \"VMC:GS_cQvw4UsHHRRlogxbWCB8W-mKD4AraM9y\",\n
+        \   \"sha512t24u:cQvw4UsHHRRlogxbWCB8W-mKD4AraM9y\",\n    \"ga4gh:SQ.cQvw4UsHHRRlogxbWCB8W-mKD4AraM9y\"\n
+        \ ],\n  \"alphabet\": \"ACDEFGHIKLMNPQRSTVWY\",\n  \"length\": 766\n}\n"
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '580'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 17 Jan 2023 15:13:53 GMT
+      Server:
+      - Werkzeug/2.2.2 Python/3.10.4
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:5000/seqrepo/1/sequence/ga4gh:SQ.cQvw4UsHHRRlogxbWCB8W-mKD4AraM9y?start=599&end=600
+  response:
+    body:
+      string: V
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '1'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Tue, 17 Jan 2023 15:13:53 GMT
+      Server:
+      - Werkzeug/2.2.2 Python/3.10.4
+    status:
+      code: 200
+      message: OK
+version: 1

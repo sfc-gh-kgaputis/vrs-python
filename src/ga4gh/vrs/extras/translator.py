@@ -344,11 +344,7 @@ class Translator:
                 return "n"
             if a.startswith("refseq:NP_"):
                 return "p"
-            if a.startswith("refseq:NG_"):
-                return "g"
-            if a.startswith("refseq:NC_"):
-                return "g"
-            if a.startswith("GRCh"):
+            if a.startswith(("refseq:NG_", "refseq:NC_", "GRCh")):
                 return "g"
             return None
 
@@ -366,27 +362,43 @@ class Translator:
         stype = stypes[0]
 
         # build interval and edit depending on sequence type
+        start, end = vo.location.interval.start.value, vo.location.interval.end.value
+        # ib: 0 1 2 3 4 5
+        #  h:  1 2 3 4 5
+        if start == end:    # insert: hgvs uses *exclusive coords*
+            ref = None
+            end += 1
+        else:               # else: hgvs uses *inclusive coords*
+            ref = self.data_proxy.get_sequence(sequence_id, start, end)
+            start += 1
+
+        alt = str(vo.state.sequence) or None  # "" => None
+
         if stype == "p":
-            raise ValueError("Only nucleic acid variation is currently supported")
-            # ival = hgvs.location.Interval(start=start, end=end)
-            # edit = hgvs.edit.AARefAlt(ref=None, alt=vo.state.sequence)
-        else:                   # pylint: disable=no-else-raise
-            start, end = vo.location.interval.start.value, vo.location.interval.end.value
-            # ib: 0 1 2 3 4 5
-            #  h:  1 2 3 4 5
-            if start == end:    # insert: hgvs uses *exclusive coords*
-                ref = None
-                end += 1
-            else:               # else: hgvs uses *inclusive coords*
-                ref = self.data_proxy.get_sequence(sequence_id, start, end)
-                start += 1
+
+            if start == end:
+                # Substitution
+                ival = hgvs.location.Interval(
+                    start=hgvs.location.AAPosition(base=start, aa=ref),
+                    end=hgvs.location.AAPosition(base=end, aa=ref))
+                edit = hgvs.edit.AASub(ref=ref, alt=alt)
+                posedit = hgvs.posedit.PosEdit(pos=ival, edit=edit)
+            else:
+                del_aa1 = self.data_proxy.get_sequence(sequence_id, start-1, start)
+                del_aa2 = self.data_proxy.get_sequence(sequence_id, end-1, end)
+                ival = hgvs.location.Interval(
+                    start=hgvs.location.AAPosition(base=start, aa=del_aa1),
+                    end=hgvs.location.AAPosition(base=end, aa=del_aa2)
+                )
+                edit = hgvs.edit.AARefAlt(ref=ref, alt=alt)
+                posedit = hgvs.posedit.PosEdit(pos=ival, edit=edit)
+        else:
             ival = hgvs.location.Interval(
                 start=hgvs.location.SimplePosition(base=start),
                 end=hgvs.location.SimplePosition(base=end))
-            alt = str(vo.state.sequence) or None  # "" => None
             edit = hgvs.edit.NARefAlt(ref=ref, alt=alt)
+            posedit = hgvs.posedit.PosEdit(pos=ival, edit=edit)
 
-        posedit = hgvs.posedit.PosEdit(pos=ival, edit=edit)
         var = hgvs.sequencevariant.SequenceVariant(
             ac=None,
             type=stype,
@@ -412,7 +424,9 @@ class Translator:
                     # if the namespace is GRC, can't normalize, since hgvs can't deal with it
                     hgvs_tools = self._get_hgvs_tools()
                     parsed = hgvs_tools.parse(str(var))
-                    var = hgvs_tools.normalize(parsed)
+                    if stype != "p":
+                        # For now, protein normalization is not supported
+                        var = hgvs_tools.normalize(parsed)
 
                 hgvs_exprs += [str(var)]
             except hgvs.exceptions.HGVSDataNotAvailableError:
