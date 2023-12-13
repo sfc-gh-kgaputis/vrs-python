@@ -35,7 +35,11 @@ _logger = logging.getLogger(__name__)
 
 
 # Assume that ga4gh.yaml and vrs.yaml files are in the same directory for now
-schema_dir = os.environ.get("VRS_SCHEMA_DIR", pkg_resources.resource_filename(__name__, "data/schema"))
+
+if os.environ.get("VRS_SCHEMA_DIR"):
+    schema_dir = os.environ.get("VRS_SCHEMA_DIR")
+else:
+    schema_dir = pkg_resources.resource_filename(__name__, "data/schema")
 with open(schema_dir + "/ga4gh.yaml", "r", encoding="utf-8") as f:
     cfg = yaml.safe_load(f)
 type_prefix_map_default = cfg["identifiers"]["type_prefix_map"]

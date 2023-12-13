@@ -30,7 +30,10 @@ _logger = logging.getLogger(__name__)
 
 # specify VRS_SCHEMA_DIR to use a schema other than the one embedded
 # in vrs-python
-schema_dir = os.environ.get("VRS_SCHEMA_DIR", pkg_resources.resource_filename(__name__, "data/schema"))
+if os.environ.get("VRS_SCHEMA_DIR"):
+    schema_dir = os.environ.get("VRS_SCHEMA_DIR")
+else:
+    schema_dir = pkg_resources.resource_filename(__name__, "data/schema")
 schema_path = schema_dir + "/vrs.json"
 
 models = None
